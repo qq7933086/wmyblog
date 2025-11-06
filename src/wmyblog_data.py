@@ -1,4 +1,4 @@
-import math, re, requests, os
+import math, re, requests, os, certifi
 import pandas as pd
 from downloader import Downloader
 from bs4 import BeautifulSoup
@@ -211,14 +211,14 @@ def update_data(data_dir, img_dir):
 
     id_list = []
     url = "https://blog.udn.com/MengyuanWang/article"
-    content = requests.get(url, headers=headers).content
+    content = requests.get(url, headers=headers, verify=False).content
     doc = BeautifulSoup(content, features="lxml")
     for d in doc.findAll(class_='article_topic'):
         id_list.append(d('a')[0]['href'].split('/')[-1])
     id_list = id_list[:10]
 
     url = f'https://classic-blog.udn.com/blog/inc_2011/psn_article_ajax.jsp?uid=MengyuanWang&f_FUN_CODE=new_rep'
-    content = requests.get(url, headers=headers).content
+    content = requests.get(url, headers=headers, verify=False).content
     doc = BeautifulSoup(content, features="lxml")
     id_list += [d('a')[0]['href'].split('/')[-1] for d in doc.findAll('dt')]
     id_list += list(df_comment["id"].iloc[:10])

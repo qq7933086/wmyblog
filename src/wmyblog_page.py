@@ -64,7 +64,7 @@ def gen_index_page(data_dir, template_dir, out_dir):
     index_template_file = f"{template_dir}/wmyblog_index.html"
     INDEX = Template(filename=index_template_file)
     html = INDEX.render(art_li=art_li)
-    with open(f"{out_dir}/index.html", "w") as f:
+    with open(f"{out_dir}/index.html", "w", encoding="utf-8") as f:
         f.write(html)
     print(f"{out_dir}/index.html saved!")
 
@@ -119,7 +119,7 @@ def gen_single_page(art_id, df_article, df_comment_tag, article_template_file, o
                                                    art_id=art_id,
                                                    post=post,
                                                    reply_li=reply_li)
-    with open(f"{out_dir}/{art_id}.html", "w", encoding="utf8") as f:
+    with open(f"{out_dir}/{art_id}.html", "w", encoding="utf-8") as f:
         f.write(html)
     # print(f"{out_dir}/{art_id}.html saved!")
 
@@ -204,14 +204,14 @@ def gen_latest_page(data_dir, template_dir, out_dir):
     latest_template_file = f"{template_dir}/wmyblog_latest.html" 
     LATEST = Template(filename=latest_template_file)
     html = LATEST.render(title="最新回复", date=refresh_date, reply_li=reply_li)
-    with open(f"{out_dir}/new_comment.html", "w", encoding="utf8") as f:
+    with open(f"{out_dir}/new_comment.html", "w", encoding="utf-8") as f:
         f.write(html)
     
     rss_template_file = f"{template_dir}/wmyblog_rss.html" 
     RSS = Template(filename=rss_template_file)
     html = RSS.render(date=refresh_date, reply_li=rss_reply_li)
     html = html.replace('&lt;br&gt;','<br>').replace('&lt;','<').replace('&gt;','>')
-    with open(f"{out_dir}/../rss.xml", "w", encoding="utf8") as f:
+    with open(f"{out_dir}/../rss.xml", "w", encoding="utf-8") as f:
         f.write(html)
     print(f"{out_dir}/../rss.xml saved!")
 
@@ -256,7 +256,7 @@ def gen_search_data(data_dir, out_dir):
     
     info_file = f"{data_dir}/transcript_info.json"
     transcript_file = f"{data_dir}/transcript_data.pkl"
-    with open(info_file, "r") as f:
+    with open(info_file, "r", encoding="utf-8") as f:
         info_dict = json.loads(f.read())
     df_transcript = pd.read_pickle(transcript_file)
 
@@ -275,11 +275,11 @@ def gen_search_data(data_dir, out_dir):
     article_dict = {"article": article_list}
     comment_dict = {"comment": comment_list}
     transcript_dict = {"transcript": transcript_list}
-    with open(f"{out_dir}/article.json", "w") as f:
+    with open(f"{out_dir}/article.json", "w", encoding="utf-8") as f:
         f.write(json.dumps(article_dict, indent=4, ensure_ascii=False))
-    with open(f"{out_dir}/comment.json", "w") as f:
+    with open(f"{out_dir}/comment.json", "w", encoding="utf-8") as f:
         f.write(json.dumps(comment_dict, ensure_ascii=False))
-    with open(f"{out_dir}/transcript.json", "w") as f:
+    with open(f"{out_dir}/transcript.json", "w", encoding="utf-8") as f:
         f.write(json.dumps(transcript_dict, indent=4, ensure_ascii=False))
     print(f"{out_dir}/search.json saved!")
 
